@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button, DevSettings} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import analytics from '@react-native-firebase/analytics';
 import auth from '@react-native-firebase/auth';
@@ -7,7 +7,7 @@ import {
   notificationListener,
   requestUserPermission,
 } from '../services/notification';
-import { DateTime } from '../services/dateFormet';
+import {DateTime} from '../services/dateFormet';
 
 const Home = props => {
   const [list, setList] = useState([]);
@@ -22,6 +22,7 @@ const Home = props => {
     notificationListener();
   }, []);
   console.log(list);
+
   return (
     <View style={styles.container}>
       <Text>Home</Text>
@@ -46,12 +47,7 @@ const Home = props => {
           })
         }
       />
-      <Button
-        title="All user"
-        onPress={async () =>
-          await analytics().setUserProperty('sdfsd', 'sdfdsaf')
-        }
-      />
+      <Button title="All user" onPress={async () => DevSettings.reload()} />
       <Text>{DateTime(new Date())}</Text>
     </View>
   );
