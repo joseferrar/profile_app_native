@@ -46,11 +46,11 @@ const MainNavigation = () => {
             users_screens: `${currentRouteName} ${
               auth()?.currentUser?.displayName
             }`,
-            screensTime: `${currentRouteName}_${
+            screensTime: `${
               auth()?.currentUser?.displayName
-            } (${DateTime(timestamp)} - ${DateTime(new Date())}) (${ms(
-              endTime - startTime,
-            )})s`,
+            }_${currentRouteName} (${DateTime(timestamp)} - ${DateTime(
+              new Date(),
+            )}) (${ms(endTime - startTime)})s`,
           });
 
           // var EndTime = 1541092163000;
@@ -68,7 +68,13 @@ const MainNavigation = () => {
           // // or in short
           // console.log((endTime - startTime) / 3600000);
 
-          console.log(previousRouteName, ' time -- ', ms(endTime - startTime));
+          console.log(
+            `${
+              auth()?.currentUser?.displayName
+            }_${currentRouteName} (${DateTime(timestamp)} - ${DateTime(
+              new Date(),
+            )}) (${ms(endTime - startTime)})s`,
+          );
 
           // console.log( "Hours --> ", Hours(new Date() - timestamp));
           // console.log( "Mins --> ", Mins(new Date() - timestamp));
