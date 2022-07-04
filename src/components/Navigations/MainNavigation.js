@@ -50,7 +50,7 @@ const MainNavigation = () => {
               auth()?.currentUser?.displayName
             }_${currentRouteName} (${DateTime(timestamp)} - ${DateTime(
               new Date(),
-            )}) (${ms(endTime - startTime)})s`,
+            )}) (${ms(new Date() - timestamp, {long: true})})`,
           });
 
           // var EndTime = 1541092163000;
@@ -68,7 +68,11 @@ const MainNavigation = () => {
           // // or in short
           // console.log((endTime - startTime) / 3600000);
 
-          console.log(previousRouteName, ' time -- ', ms(endTime - startTime));
+          console.log(
+            previousRouteName,
+            ' time -- ',
+            ms(new Date() - timestamp, {long: true}),
+          );
 
           // console.log( "Hours --> ", Hours(new Date() - timestamp));
           // console.log( "Mins --> ", Mins(new Date() - timestamp));

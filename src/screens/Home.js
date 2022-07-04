@@ -49,6 +49,8 @@ const Home = props => {
       />
       <Button title="All user" onPress={async () => DevSettings.reload()} />
       <Text>{DateTime(new Date())}</Text>
+      <Button title="Item" onPress={async () => props.navigation.navigate('Item')} />
+      <Button title="Profile" onPress={async () => props.navigation.navigate('Profile')} />
     </View>
   );
 };
