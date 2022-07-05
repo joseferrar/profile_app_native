@@ -7,10 +7,20 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  Button,
 } from 'react-native';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId:
+    '358934350170-d99oc7flvh8nrjcb1qho76e7pbu5j9sa.apps.googleusercontent.com',
+});
 
 export default function Login(props) {
   const {navigation} = props;
@@ -46,6 +56,17 @@ export default function Login(props) {
     },
   });
   // console.log(auth);
+  async function onGoogleButtonPress() {
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  }
+
   return (
     <ImageBackground
       style={styles.container}
@@ -92,6 +113,15 @@ export default function Login(props) {
         onPress={formik.handleSubmit}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
+      <GoogleSigninButton
+        size={GoogleSigninButton.Size.Wide}
+        style={styles.google}
+        onPress={() =>
+          onGoogleButtonPress().then(() =>
+            console.log('Signed in with Google!'),
+          )
+        }
+      />
       <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
         Go to Register
       </Text>
@@ -164,5 +194,8 @@ const styles = StyleSheet.create({
     color: '#E8BD0D',
     marginTop: 20,
     textDecorationLine: 'underline',
+  },
+  google: {
+    marginTop: 20,
   },
 });
