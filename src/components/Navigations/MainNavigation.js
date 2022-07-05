@@ -11,7 +11,6 @@ import {DateTime, Seconds, Mins, Hours} from '../../services/dateFormet';
 const ms = require('ms');
 import prettyMilliseconds from 'pretty-ms';
 
-
 const Stack = createNativeStackNavigator();
 
 const MainNavigation = () => {
@@ -52,7 +51,10 @@ const MainNavigation = () => {
               auth()?.currentUser?.displayName
             }_${currentRouteName} (${DateTime(timestamp)} - ${DateTime(
               new Date(),
-            )}) (${ms(new Date() - timestamp, {long: true})})`,
+            )}) (${prettyMilliseconds(new Date() - timestamp, {
+              separateMilliseconds: true,
+              verbose: true,
+            })})`,
           });
 
           // var EndTime = 1541092163000;
@@ -73,7 +75,10 @@ const MainNavigation = () => {
           console.log(
             previousRouteName,
             ' time -- ',
-            prettyMilliseconds(new Date() - timestamp, {separateMilliseconds: true, verbose: true}),
+            prettyMilliseconds(new Date() - timestamp, {
+              separateMilliseconds: true,
+              verbose: true,
+            }),
           );
 
           // console.log( "Hours --> ", Hours(new Date() - timestamp));
