@@ -16,6 +16,7 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
+import {LoginManager, AccessToken, LoginButton} from 'react-native-fbsdk-next';
 
 GoogleSignin.configure({
   webClientId:
@@ -65,6 +66,30 @@ export default function Login(props) {
 
     // Sign-in the user with the credential
     return auth().signInWithCredential(googleCredential);
+  }
+
+  async function onFacebookButtonPress() {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(facebookCredential);
   }
 
   return (
@@ -119,6 +144,14 @@ export default function Login(props) {
         onPress={() =>
           onGoogleButtonPress().then(() =>
             console.log('Signed in with Google!'),
+          )
+        }
+      />
+      <Button
+        title="Sign in with Facebook"
+        onPress={() =>
+          onFacebookButtonPress().then(res =>
+            console.log('Signed in with Facebook!' + res),
           )
         }
       />
