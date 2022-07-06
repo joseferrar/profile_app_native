@@ -1,6 +1,6 @@
 import {Button, StyleSheet, Text, View} from 'react-native';
 import React, {useState, useEffect, useMemo} from 'react';
-
+import AppButton from '../components/AppButton';
 const Item = () => {
   const [name, setName] = useState('sss');
 
@@ -19,7 +19,8 @@ const Item = () => {
   return (
     <View>
       <Text>Item {name}</Text>
-      <Button title={'click'} />
+      {/* <Button title={'click'} /> */}
+      <AppButton title={'Item Button'} />
     </View>
   );
 };

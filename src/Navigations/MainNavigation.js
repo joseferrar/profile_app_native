@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabNavigation from './TabNavigation';
-import Login from '../../screens/LoginScreen';
-import Register from '../../screens/RegisterScreen';
-import Protected from '../../screens/ProtectedScreen';
+import Login from '../screens/LoginScreen';
+import Register from '../screens/RegisterScreen';
+import Protected from '../screens/ProtectedScreen';
 import analytics from '@react-native-firebase/analytics';
 import auth from '@react-native-firebase/auth';
-import {DateTime, Seconds, Mins, Hours} from '../../services/dateFormet';
+import {DateTime, Seconds, Mins, Hours} from '../services/dateFormet';
 const ms = require('ms');
 import prettyMilliseconds from 'pretty-ms';
 

@@ -1,10 +1,15 @@
 import {StyleSheet, Text, View, Button} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
 import PushNotification from 'react-native-push-notification';
 
 const Profile = props => {
   const {navigation} = props;
+
+  useEffect(() => {
+    // console.log('auth()?.currentUser?', auth()?.currentUser);
+  }, []);
+
   const logout = () => {
     auth()
       .signOut()
@@ -16,7 +21,6 @@ const Profile = props => {
 
   const handleNotification = () => {
     PushNotification.cancelAllLocalNotifications();
-
     PushNotification.localNotification({
       channelId: 1,
       title: 'hello',

@@ -74,6 +74,7 @@ export default function Login(props) {
       'email',
     ]);
 
+    console.log('FB result -->', result);
     if (result.isCancelled) {
       throw 'User cancelled the login process';
     }
@@ -83,10 +84,12 @@ export default function Login(props) {
     if (!data) {
       throw 'Something went wrong obtaining access token';
     }
-
+    console.log('accessToken --> ', data.accessToken);
     const facebookCredential = auth.FacebookAuthProvider.credential(
       data.accessToken,
     );
+
+    console.log('facebookCredential --> ', facebookCredential);
 
     // Sign-in the user with the credential
     return auth().signInWithCredential(facebookCredential);

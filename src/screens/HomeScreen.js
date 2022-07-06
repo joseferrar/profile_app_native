@@ -3,6 +3,8 @@ import React, {useState, useEffect} from 'react';
 import analytics from '@react-native-firebase/analytics';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+
+import AppButton from '../components/AppButton';
 import {
   notificationListener,
   requestUserPermission,
@@ -26,8 +28,20 @@ const Home = props => {
   return (
     <View style={styles.container}>
       <Text>Home</Text>
-      <Button
+      {/* <Button
         title="Add To Basket"
+        onPress={async () =>
+          await analytics().logEvent('Basket', {
+            id: 3745092,
+            item: 'mens grey t-shirt',
+            description: ['round neck', 'long sleeved'],
+            size: 'L',
+          })
+        }
+      /> */}
+
+      <AppButton
+        title={'Add To Basket'}
         onPress={async () =>
           await analytics().logEvent('Basket', {
             id: 3745092,

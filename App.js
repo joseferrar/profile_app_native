@@ -1,5 +1,5 @@
 import React from 'react';
-import MainNavigation from './src/components/Navigations/MainNavigation';
+import MainNavigation from './src/Navigations/MainNavigation';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 const App = () => {
