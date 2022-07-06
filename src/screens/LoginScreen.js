@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   ImageBackground,
   Button,
+  NativeModules,
 } from 'react-native';
+const {RNTwitterSignin} = NativeModules;
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
@@ -95,6 +97,25 @@ export default function Login(props) {
     return auth().signInWithCredential(facebookCredential);
   }
 
+  const APIKey = {
+    TWITTER_API_KEY: 'yq16Zo2F9soipMcxh44ZUZb2h',
+    TWITTER_SECRET_KEY: 'uyNKTQ7EO41wRW5W12lkeZDD6o5mg7DMakEnsnn5BPwPHnNbVC',
+  };
+
+  const twitterLogin = async () => {
+    await RNTwitterSignin.init(
+      APIKey.TWITTER_API_KEY,
+      APIKey.TWITTER_SECRET_KEY,
+    );
+    await RNTwitterSignin.logIn()
+      .then(loginData => {
+        console.log('loginData', loginData);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
+  };
+
   return (
     <ImageBackground
       style={styles.container}
@@ -151,12 +172,18 @@ export default function Login(props) {
         }
       />
       <Button
+        style={styles.fb}
         title="Sign in with Facebook"
         onPress={() =>
           onFacebookButtonPress().then(res =>
             console.log('Signed in with Facebook!' + res),
           )
         }
+      />
+      <Button
+        title="Sign in with Twitter"
+        style={styles.fb}
+        onPress={twitterLogin}
       />
       <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
         Go to Register
@@ -232,6 +259,9 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   google: {
+    marginTop: 20,
+  },
+  fb: {
     marginTop: 20,
   },
 });
