@@ -7,23 +7,10 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  Button,
-  NativeModules,
 } from 'react-native';
-const {RNTwitterSignin} = NativeModules;
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-} from '@react-native-google-signin/google-signin';
-import {LoginManager, AccessToken, LoginButton} from 'react-native-fbsdk-next';
-
-GoogleSignin.configure({
-  webClientId:
-    '358934350170-d99oc7flvh8nrjcb1qho76e7pbu5j9sa.apps.googleusercontent.com',
-});
 
 export default function Login(props) {
   const {navigation} = props;
@@ -58,63 +45,6 @@ export default function Login(props) {
         });
     },
   });
-  // console.log(auth);
-  async function onGoogleButtonPress() {
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
-  }
-
-  async function onFacebookButtonPress() {
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
-
-    console.log('FB result -->', result);
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
-    }
-
-    const data = await AccessToken.getCurrentAccessToken();
-
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
-    console.log('accessToken --> ', data.accessToken);
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
-
-    console.log('facebookCredential --> ', facebookCredential);
-
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(facebookCredential);
-  }
-
-  const APIKey = {
-    TWITTER_API_KEY: 'yq16Zo2F9soipMcxh44ZUZb2h',
-    TWITTER_SECRET_KEY: 'uyNKTQ7EO41wRW5W12lkeZDD6o5mg7DMakEnsnn5BPwPHnNbVC',
-  };
-
-  const twitterLogin = async () => {
-    await RNTwitterSignin.init(
-      APIKey.TWITTER_API_KEY,
-      APIKey.TWITTER_SECRET_KEY,
-    );
-    await RNTwitterSignin.logIn()
-      .then(loginData => {
-        console.log('loginData', loginData);
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
-  };
 
   return (
     <ImageBackground
@@ -162,29 +92,26 @@ export default function Login(props) {
         onPress={formik.handleSubmit}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
-      <GoogleSigninButton
-        size={GoogleSigninButton.Size.Wide}
+
+      <TouchableOpacity
         style={styles.google}
-        onPress={() =>
-          onGoogleButtonPress().then(() =>
-            console.log('Signed in with Google!'),
-          )
-        }
-      />
-      <Button
-        style={styles.fb}
-        title="Sign in with Facebook"
-        onPress={() =>
-          onFacebookButtonPress().then(res =>
-            console.log('Signed in with Facebook!' + res),
-          )
-        }
-      />
-      <Button
-        title="Sign in with Twitter"
-        style={styles.fb}
-        onPress={twitterLogin}
-      />
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('GoogleScreen')}>
+        <Text style={styles.loginText}>Go to Google Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.facebook}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('FacebookScreen')}>
+        <Text style={styles.loginText}>Go to Facebook Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.twitter}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('TwitterScreen')}>
+        <Text style={styles.loginText}>Go to Twitter Login</Text>
+      </TouchableOpacity>
       <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
         Go to Register
       </Text>
@@ -246,6 +173,33 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  google: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'red',
+  },
+  facebook: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'blue',
+  },
+  twitter: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'green',
+  },
   error: {
     color: 'red',
     marginBottom: 10,
@@ -257,9 +211,6 @@ const styles = StyleSheet.create({
     color: '#E8BD0D',
     marginTop: 20,
     textDecorationLine: 'underline',
-  },
-  google: {
-    marginTop: 20,
   },
   fb: {
     marginTop: 20,

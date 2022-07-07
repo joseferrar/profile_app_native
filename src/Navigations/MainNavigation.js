@@ -10,6 +10,9 @@ import auth from '@react-native-firebase/auth';
 import {DateTime, Seconds, Mins, Hours} from '../services/dateFormet';
 const ms = require('ms');
 import prettyMilliseconds from 'pretty-ms';
+import GoogleScreen from '../screens/GoogleScreen';
+import FacebookScreen from '../screens/FacebookScreen';
+import TwitterScreen from '../screens/TwitterScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -106,6 +109,21 @@ const MainNavigation = () => {
         <Stack.Screen
           name="Register"
           component={Register}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="GoogleScreen"
+          component={GoogleScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="FacebookScreen"
+          component={FacebookScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TwitterScreen"
+          component={TwitterScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
