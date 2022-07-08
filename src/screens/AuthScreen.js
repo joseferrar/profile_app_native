@@ -12,39 +12,8 @@ import {useFormik} from 'formik';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
 
-export default function Login(props) {
+function AuthScreen(props) {
   const {navigation} = props;
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-
-    validationSchema: yup.object({
-      email: yup.string().email().required('Email is required'),
-      password: yup
-        .string()
-        .required('Password is required')
-        .min(8, '8 characters required'),
-    }),
-
-    onSubmit: async (Data, reset) => {
-      console.log(Data);
-      auth()
-        .signInWithEmailAndPassword(Data.email, Data.password)
-        .then(result => {
-          navigation.replace('Dashboard');
-          reset.resetForm({
-            email: '',
-            password: '',
-          });
-        })
-        .catch(error => {
-          alert(error.message);
-        });
-    },
-  });
 
   return (
     <ImageBackground
@@ -59,43 +28,34 @@ export default function Login(props) {
         }}
         style={styles.image}
       />
-      <Text style={styles.heading}>Login</Text>
+      <Text style={styles.heading}>Login to continue</Text>
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          value={formik.values.email}
-          onChangeText={formik.handleChange('email')}
-        />
-      </View>
-      {formik.errors.email && formik.touched.email && (
-        <Text style={styles.error}>{formik.errors.email}</Text>
-      )}
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          value={formik.values.password}
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={formik.handleChange('password')}
-        />
-      </View>
-      {formik.errors.password && formik.touched.password && (
-        <Text style={styles.error}>{formik.errors.password}</Text>
-      )}
       <TouchableOpacity
-        style={styles.loginBtn}
+        style={styles.login}
         activeOpacity={0.6}
-        onPress={formik.handleSubmit}>
-        <Text style={styles.loginText}>Login</Text>
+        onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.emailText}>Go to Email Login</Text>
       </TouchableOpacity>
 
-      <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
-        Go to Register
-      </Text>
+      <TouchableOpacity
+        style={styles.google}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('GoogleScreen')}>
+        <Text style={styles.loginText}>Go to Google Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.facebook}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('FacebookScreen')}>
+        <Text style={styles.loginText}>Go to Facebook Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.twitter}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('TwitterScreen')}>
+        <Text style={styles.loginText}>Go to Twitter Login</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 }
@@ -149,10 +109,51 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: '#6A1B4D',
   },
+  login: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: '#fff',
+  },
   loginText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  emailText: {
+    color: '#000',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  google: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'red',
+  },
+  facebook: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'blue',
+  },
+  twitter: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'green',
   },
   error: {
     color: 'red',
@@ -170,3 +171,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+export default AuthScreen;

@@ -13,6 +13,7 @@ import prettyMilliseconds from 'pretty-ms';
 import GoogleScreen from '../screens/GoogleScreen';
 import FacebookScreen from '../screens/FacebookScreen';
 import TwitterScreen from '../screens/TwitterScreen';
+import AuthScreen from '../screens/AuthScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -109,6 +110,11 @@ const MainNavigation = () => {
         <Stack.Screen
           name="Register"
           component={Register}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen

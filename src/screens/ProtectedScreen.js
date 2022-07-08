@@ -11,7 +11,7 @@ const Protected = props => {
       if (user) {
         navigation.replace('Dashboard');
       } else {
-        navigation.replace('Login');
+        navigation.replace('AuthScreen');
       }
     });
   };
