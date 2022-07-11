@@ -56,6 +56,12 @@ function AuthScreen(props) {
         onPress={() => navigation.navigate('TwitterScreen')}>
         <Text style={styles.loginText}>Go to Twitter Login</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.github}
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate('GithubScreen')}>
+        <Text style={styles.loginText}>Go to Github Login</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 }
@@ -154,6 +160,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     backgroundColor: 'green',
+  },
+  github: {
+    width: '85%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: '#000',
   },
   error: {
     color: 'red',

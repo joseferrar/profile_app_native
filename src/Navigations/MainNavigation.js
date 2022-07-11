@@ -14,6 +14,7 @@ import GoogleScreen from '../screens/GoogleScreen';
 import FacebookScreen from '../screens/FacebookScreen';
 import TwitterScreen from '../screens/TwitterScreen';
 import AuthScreen from '../screens/AuthScreen';
+import GithubScreen from '../screens/GithubScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -130,6 +131,11 @@ const MainNavigation = () => {
         <Stack.Screen
           name="TwitterScreen"
           component={TwitterScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="GithubScreen"
+          component={GithubScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
