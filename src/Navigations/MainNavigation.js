@@ -15,6 +15,7 @@ import FacebookScreen from '../screens/FacebookScreen';
 import TwitterScreen from '../screens/TwitterScreen';
 import AuthScreen from '../screens/AuthScreen';
 import GithubScreen from '../screens/GithubScreen';
+analytics().setAnalyticsCollectionEnabled(true);
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,18 @@ const MainNavigation = () => {
   var startTime = timestamp;
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
+
+  function msToTime(duration) {
+    var seconds = parseInt((duration / 1000) % 60);
+    var minutes = parseInt((duration / (1000 * 60)) % 60);
+    var hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    return hours + ' h' + minutes + ' m' + seconds + ' s';
+  }
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -80,10 +93,7 @@ const MainNavigation = () => {
           console.log(
             previousRouteName,
             ' time -- ',
-            prettyMilliseconds(new Date() - timestamp, {
-              separateMilliseconds: true,
-              verbose: true,
-            }),
+            msToTime(new Date() - timestamp),
           );
 
           // console.log( "Hours --> ", Hours(new Date() - timestamp));
